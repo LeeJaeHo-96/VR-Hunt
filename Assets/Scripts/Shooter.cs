@@ -7,6 +7,8 @@ public class Shooter : MonoBehaviour
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
 
+    [SerializeField] GameObject laser;
+
     [SerializeField] float bulletSpeed;
     [SerializeField] bool isReload;
     [SerializeField] float reloadingTime = 2;
@@ -17,6 +19,11 @@ public class Shooter : MonoBehaviour
     public void Start()
     {
         isReload = true;
+        laser.SetActive(false);
+    }
+
+    private void Update()
+    {
     }
     public void Shoot()
     {
@@ -44,6 +51,23 @@ public class Shooter : MonoBehaviour
     {
         if (!isReload)
             ShootSound(noBangSound);
+    }
+
+    public void LaserOn()
+    {
+        while (true)
+        {
+            if (isReload)
+                laser.SetActive(true);
+
+            if (!isReload)
+                laser.SetActive(false);
+        }
+    }
+
+    public void LaserOff()
+    {
+        laser.SetActive(false);
     }
     
 

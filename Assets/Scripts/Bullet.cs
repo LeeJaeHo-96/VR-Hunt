@@ -9,7 +9,6 @@ public class Bullet : MonoBehaviour
         if(collision.collider.CompareTag("Animal"))
         {
             Destroy(gameObject);
-            Destroy(collision.gameObject);
         }
     }
 }
