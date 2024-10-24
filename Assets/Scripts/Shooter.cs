@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Shooter : MonoBehaviour
 {
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
 
-    [SerializeField] GameObject laser;
+    [SerializeField] GameObject laserPointer;
+    [SerializeField] LineRenderer laser;
 
     [SerializeField] float bulletSpeed;
     [SerializeField] bool isReload;
@@ -19,11 +21,12 @@ public class Shooter : MonoBehaviour
     public void Start()
     {
         isReload = true;
-        laser.SetActive(false);
+        laserPointer.SetActive(false);
     }
 
-    private void Update()
+    public void Update()
     {
+        LaserCheck();
     }
     public void Shoot()
     {
@@ -53,31 +56,37 @@ public class Shooter : MonoBehaviour
             ShootSound(noBangSound);
     }
 
+    public void LaserCheck()
+    {
+        if (isReload)
+            LaserOn();
+
+        if (!isReload)
+            LaserOff();
+        
+        
+    }
+    
     public void LaserOn()
     {
-        while (true)
-        {
-            if (isReload)
-                laser.SetActive(true);
-
-            if (!isReload)
-                laser.SetActive(false);
-        }
+        laser.enabled = true;
     }
 
     public void LaserOff()
     {
-        laser.SetActive(false);
+        laser.enabled = false;
+    }
+
+    public void LaserPointerOn()
+    {
+        laserPointer.SetActive(true);
+    }
+
+    public void LaserPointerOff()
+    {
+        laserPointer.SetActive(false);
     }
     
-
-   // public void Reload()
-   // {
-   //     if (!isReload)
-   //     {
-   //         Coroutine reloadCo = StartCoroutine(ReloadCo());
-   //     }
-   // }
 
     IEnumerator ReloadCo()
     {
